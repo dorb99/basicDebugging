@@ -41,7 +41,6 @@ public class ATM {
         System.out.println(user + "'s balance: $" + balance);
     }
     
-    public static void main(String[] args) {
     	// try with resource
         try (Scanner scanner = new Scanner(System.in);
         	Scanner scan = new Scanner(System.in)){
