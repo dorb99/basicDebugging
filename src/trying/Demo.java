@@ -1,6 +1,5 @@
 package trying;
 
-import java.io.File;
 import java.util.Scanner;
 
 public class Demo {
@@ -23,35 +22,17 @@ public class Demo {
 
 class First{
 	public static void callingNext(){
-		// more code
-//		try {
-//			Second.callingNext(num);
-//		} catch (NumberException e) {
-//			System.err.println(e);
-//			// recalling with another number, prefered using scanner
-//			First.callingNext(Math.abs(num)+1);
-////			throw new Exception("throwed");
-//		}catch (Exception e) {
-//			throw e;
-//			// recalling with another number, prefered using scanner
-//		}	
+		// more code	
 		try {
 			Second.callingNext();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			First.callingNext();
 		}
-		// TODO Auto-generated catch block
 		// more code
 	}
 }
 class Second{
 	public static void callingNext() throws Exception {
-		// more code
-//		System.out.println();
-//		if(Third.callingNext(num) == null) {
-//			// how do i exit?
-//		}
 		Scanner scan = new Scanner(System.in);
 		int num = 0;
 		try{
@@ -64,6 +45,7 @@ class Second{
 		} catch(Exception e) {
 //			System.out.println("Not a valid number!");
 //			First.callingNext();
+			scan.close();
 			throw e;
 		}
 		System.out.println("Choosen a number! "+num);
@@ -97,6 +79,8 @@ class Third{
 	}
 }
 class NumberException extends Exception {
+	private static final long serialVersionUID = 1L;
+
 	public NumberException() {
 		super("Number isn't above 0");
 	}
