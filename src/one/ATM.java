@@ -7,15 +7,15 @@ public class ATM {
     private double balance;
     private String user;
 
-    public ATM(double initialBalance) {
-        this.balance = initialBalance;
+    public ATM(int initialBalance) {
+        this.balance = (double) initialBalance;
     }
 
     public void setUser(String user) {
         this.user = user;
     }
 
-    public void deposit(double amount) {
+    public void deposit(int amount) {
         if (amount <= 0) {
             System.out.println("Not a valid amount!");
             return;
@@ -72,7 +72,7 @@ public class ATM {
 	                case 1:
 	                    System.out.print("Enter deposit amount: ");
 	                    double depositAmount = receiveDouble(scanner);
-	                    myATM.deposit(depositAmount);
+	                    myATM.deposit((int)depositAmount);
 	                    break;
 	                case 2:
 	                    System.out.print("Enter withdrawal amount: ");
