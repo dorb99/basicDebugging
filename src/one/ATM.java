@@ -24,19 +24,6 @@ public class ATM {
         System.out.println("Deposited: $" + amount);
     }
 
-    public void withdraw(double amount) {
-    	if (amount <= 0) {
-    		 System.out.println("Not a valid amount!");
-             return;
-        }
-        if (amount > balance) {
-            System.out.println("Error: Not enough balance!");
-            return;
-        }
-        balance -= amount;
-        System.out.println("Withdrawn: $" + amount);
-    }
-
     public void printBalance() {
         System.out.println(user + "'s balance: $" + balance);
     }
@@ -77,7 +64,7 @@ public class ATM {
 	                case 2:
 	                    System.out.print("Enter withdrawal amount: ");
 	                    double withdrawAmount = receiveDouble(scanner);
-	                    myATM.withdraw(withdrawAmount);
+//	                    myATM.withdraw(withdrawAmount);
 	                    break;
 	                case 3:
 	                    myATM.printBalance();
