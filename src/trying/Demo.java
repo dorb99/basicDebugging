@@ -1,110 +1,116 @@
 package trying;
 
-import java.io.File;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Demo {
-	public static void main(String[] args) {
-//		int num = -2;
-////		String str = "hello";
-//		try {
-			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			System.err.println(e);
-//		}
-		First.callingNext();
-//		
-//		System.out.println("Finished!");
-		
-		
-	}
-}
+    private double balance;
+    private String user;
 
-class First{
-	public static void callingNext(){
-		// more code
-//		try {
-//			Second.callingNext(num);
-//		} catch (NumberException e) {
-//			System.err.println(e);
-//			// recalling with another number, prefered using scanner
-//			First.callingNext(Math.abs(num)+1);
-////			throw new Exception("throwed");
-//		}catch (Exception e) {
-//			throw e;
-//			// recalling with another number, prefered using scanner
-//		}	
-		try {
-			Second.callingNext();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			First.callingNext();
-		}
-		// TODO Auto-generated catch block
-		// more code
-	}
-}
-class Second{
-	public static void callingNext() throws Exception {
-		// more code
-//		System.out.println();
-//		if(Third.callingNext(num) == null) {
-//			// how do i exit?
-//		}
-		Scanner scan = new Scanner(System.in);
-		int num = 0;
-		try{
-			System.out.println("Choose a number!");
-			num = scan.nextInt();
-			if(num < 0) {
-				System.out.println("Number must be possitive");
-				First.callingNext();
-			}
-		} catch(Exception e) {
-//			System.out.println("Not a valid number!");
-//			First.callingNext();
-			throw e;
-		}
-		System.out.println("Choosen a number! "+num);
-		scan.close();
-		// more code
-		
-		
-		
-		// finished and return
-	}
-}
+    public Demo(double initialBalance) {
+        this.balance = initialBalance;
+    }
 
-class Third{
-	public static int callingNext(int num) throws Exception {
-		if(num < 0) {
-			throw new NumberException();
-		} else
-		if(num == 0) {
-			throw new NumberException();
-//			System.err.println("received a zero");
-//			return null;
-		} else if (num == 15) {
-			throw new Exception("The number should never be 15!");
-		}
-		
-		System.out.println("Everything okay continue");
-		
-		System.out.println("worked: "+(10/num));
-		// rest of code
-		return num;
-	}
-}
-class NumberException extends Exception {
-	public NumberException() {
-		super("Number isn't above 0");
-	}
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            System.out.println("Not a valid amount!");
+            return;
+        }
+        balance += amount;
+        System.out.println("Deposited: $" + amount);
+    }
+
+    public void withdraw(double amount) {
+    	if (amount <= 0) {
+    		 System.out.println("Not a valid amount!");
+             return;
+        }
+        if (amount > balance) {
+            System.out.println("Error: Not enough balance!");
+            return;
+        }
+        balance -= amount;
+        System.out.println("Withdrawn: $" + amount);
+    }
+
+    public void printBalance() {
+        System.out.println(user + "'s balance: $" + balance);
+    }
+    
+    public static void main(String[] args) {
+    	// try with resource
+        try (Scanner scanner = new Scanner(System.in);
+        	Scanner scan = new Scanner(System.in)){
+	        Demo myATM = new Demo(500);
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	        System.out.print("Enter your name: ");
+	        String name = scanner.nextLine();
+	        if(name.isBlank()) {
+	        	name = "default name";
+	        }
+	        myATM.setUser(name);
+	        
+	        // email: diddiw@cceec.fefe
+	        
+	        /// username : at least 6 characters
+	        boolean running = true;
+	        while (running) {
+	            System.out.println("\n1. Deposit");
+	            System.out.println("2. Withdraw");
+	            System.out.println("3. Show Balance");
+	            System.out.println("4. Exit");
+	            System.out.print("Choose an option: ");
+	            int choice;
+	            
+            	choice = (int) receiveDouble(scanner);
+	            
+	            switch (choice) {
+	                case 1:
+	                    System.out.print("Enter deposit amount: ");
+	                    double depositAmount = receiveDouble(scanner);
+	                    myATM.deposit(depositAmount);
+	                    break;
+	                case 2:
+	                    System.out.print("Enter withdrawal amount: ");
+	                    double withdrawAmount = receiveDouble(scanner);
+	                    myATM.withdraw(withdrawAmount);
+	                    break;
+	                case 3:
+	                    myATM.printBalance();
+	                    break;
+	                case 4:
+	                    System.out.println("Thank you! Goodbye.");
+	                    System.exit(0);
+	                    break;
+//	                case 0:
+//	                	running = false;
+//	                	continue;
+	                default:
+	                    System.out.println("Invalid choice. Try again.");
+	            }
+	            
+	        }
+	        // after while loop still in try block
+        } // end of try block
+        // using catch on the outside try block
+        // scanner is closed
+        System.out.println("After scanner closed");
+    }
+
+    // using a private method
+	private static double receiveDouble(Scanner scanner) {
+		double num = 0;
+		try{
+			num = scanner.nextDouble();
+			return num;
+		} catch (InputMismatchException e) {
+			scanner.nextLine();
+        	System.err.println("Not a valid number!");
+        	return receiveDouble(scanner);
+        }
 	}
 }
-

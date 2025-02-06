@@ -7,21 +7,34 @@ public class ATM {
     private double balance;
     private String user;
 
-    public ATM(int initialBalance) {
-        this.balance = (double) initialBalance;
+    public ATM(double initialBalance) {
+        this.balance = initialBalance;
     }
 
     public void setUser(String user) {
         this.user = user;
     }
 
-    public void deposit(int amount) {
+    public void deposit(double amount) {
         if (amount <= 0) {
             System.out.println("Not a valid amount!");
             return;
         }
         balance += amount;
         System.out.println("Deposited: $" + amount);
+    }
+
+    public void withdraw(double amount) {
+    	if (amount <= 0) {
+    		 System.out.println("Not a valid amount!");
+             return;
+        }
+        if (amount > balance) {
+            System.out.println("Error: Not enough balance!");
+            return;
+        }
+        balance -= amount;
+        System.out.println("Withdrawn: $" + amount);
     }
 
     public void printBalance() {
@@ -59,12 +72,12 @@ public class ATM {
 	                case 1:
 	                    System.out.print("Enter deposit amount: ");
 	                    double depositAmount = receiveDouble(scanner);
-	                    myATM.deposit((int)depositAmount);
+	                    myATM.deposit(depositAmount);
 	                    break;
 	                case 2:
 	                    System.out.print("Enter withdrawal amount: ");
 	                    double withdrawAmount = receiveDouble(scanner);
-//	                    myATM.withdraw(withdrawAmount);
+	                    myATM.withdraw(withdrawAmount);
 	                    break;
 	                case 3:
 	                    myATM.printBalance();
